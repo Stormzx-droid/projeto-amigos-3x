@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Surpresa 🎉</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    #titulo {
+      font-size: 3em;
+    }
+
+    #botao {
+      padding: 15px 30px;
+      font-size: 1.2em;
+      background-color: white;
+      color: black;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 20px;
+    }
+
+    #botao:hover {
+      background-color: #f0f0f0;
+      transform: scale(1.05);
+    }
+
+    #contagem {
+      color: white;
+      font-size: 6em;
+      margin-top: 30px;
+      transition: all 0.3s ease;
+      height: 1.2em;
+    }
+
+    #foto {
+      margin-top: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
+      opacity: 0;
+      transition: opacity 1s ease;
+      display: none;
+      width: 300px;
+      height: 400px;
+      object-fit: cover; /* corta e centraliza as imagens para manter proporção */
+    }
+
+    #fim {
+      font-size: 3em;
+      margin-top: 30px;
+      display: none;
+      color: white;
+      animation: fadein 2s ease;
+    }
+
+    @keyframes fadein {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <h1 id="titulo">Sejam Bem-Vindos 🎉</h1>
+  <button id="botao">Clique aqui para começar 🎉</button>
+  <div id="contagem"></div>
+  <img id="foto" src="" alt="Foto do Grupo" />
+  <div id="fim">Fim 🎉</div>
+
+  <script>
+    const botao = document.getElementById('botao');
+    const contagem = document.getElementById('contagem');
+    const foto = document.getElementById('foto');
+    const fim = document.getElementById('fim');
+
+    const fotos = [
+      'foto1.jpg', 'foto2.jpg', 'foto3.jpg', 'foto4.jpg', 'foto5.jpg',
+      'foto6.jpg', 'foto8.jpg', 'foto9.jpg', 'foto10.jpg'
+    ];
+
+    let fotoAtual = 0;
+
+    botao.addEventListener('click', () => {
+      botao.style.display = 'none';
+      let sequencia = ['Prontos?', '3', '2', '1'];
+      let i = 0;
+
+      contagem.textContent = sequencia[i];
+
+      const intervalo = setInterval(() => {
+        i++;
+        if (i < sequencia.length) {
+          contagem.textContent = sequencia[i];
+        } else {
+          clearInterval(intervalo);
+          contagem.textContent = '';
+          mostrarFoto();
+          iniciarSlideshow();
+        }
+      }, 1000);
+    });
+
+    function mostrarFoto() {
+      foto.src = fotos[fotoAtual];
+      foto.style.display = 'block';
+      setTimeout(() => {
+        foto.style.opacity = 1;
+      }, 100);
+    }
+
+    function iniciarSlideshow() {
+      const intervalo = setInterval(() => {
+        foto.style.opacity = 0;
+
+        setTimeout(() => {
+          fotoAtual++;
+
+          if (fotoAtual >= fotos.length) {
+            clearInterval(intervalo);
+            foto.style.display = 'none';
+            fim.style.display = 'block';
+            return;
+          }
+
+          foto.src = fotos[fotoAtual];
+          foto.style.opacity = 1;
+        }, 1000);
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
